@@ -1,0 +1,42 @@
+
+name: ULTRA CLOUD GAMING PC
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cloud-pc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Initialize Cloud PC
+        run: |
+          echo "================================"
+          echo " ULTRA CLOUD GAMING PC"
+          echo " Initializing environment..."
+          echo "================================"
+          uname -a
+          lscpu
+          free -h
+          df -h
+
+      - name: Install gaming dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            mesa-utils \
+            vulkan-tools \
+            mesa-vulkan-drivers \
+            curl \
+            wget \
+            git
+
+      - name: Verify environment
+        run: |
+          echo "Environment ready!"
+          echo "Checking graphics:"
+          lspci | grep -i -E 'vga|3d|display' || true
+          echo "Checking system:"
+          free -h
+          df -h
